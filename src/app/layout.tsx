@@ -2,13 +2,12 @@ import "@/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-import { SessionProvider } from "next-auth/react";
-import { TRPCReactProvider } from "@/trpc/react";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "GitIntel",
   description: "Get a deep insight about your repository",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/logo.svg" }],
 };
 
 export default function RootLayout({
@@ -19,9 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body suppressHydrationWarning>
-        <SessionProvider>
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </SessionProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
