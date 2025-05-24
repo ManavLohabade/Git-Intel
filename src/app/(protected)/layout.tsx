@@ -26,7 +26,7 @@ const layout = ({ children } : Props) => {
 
         </main>
     </SidebarProvider>
-  ) 
+  )
 }
 
 export default layout

@@ -2,7 +2,9 @@ import "@/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-import { Providers } from "./providers";
+import { SessionProvider } from "next-auth/react";
+import { TRPCReactProvider } from "@/trpc/react";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "GitIntel",
@@ -17,8 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body suppressHydrationWarning>
-        <Providers>{children}</Providers>
+      <body>
+        <SessionProvider>
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Toaster richColors/>
+        </SessionProvider>
       </body>
     </html>
   );
