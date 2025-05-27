@@ -4,7 +4,7 @@
 
 import { generateEmbedding, summariseCode } from "./gemini"
 
-import { Document } from "@langchain/core/documents"
+import { type Document } from "@langchain/core/documents"
 //this is a class that allows you to look into the files of github repo
 import { GithubRepoLoader } from "@langchain/community/document_loaders/web/github"
 import { db } from "@/server/db"

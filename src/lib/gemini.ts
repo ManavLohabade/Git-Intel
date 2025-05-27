@@ -1,4 +1,4 @@
-import { Document } from "@langchain/core/documents";
+import { type Document } from "@langchain/core/documents";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
