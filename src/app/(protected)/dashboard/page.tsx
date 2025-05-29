@@ -2,6 +2,7 @@
 
 import { ExternalLink, Github } from 'lucide-react';
 
+import ArchiveButton from './archive-button';
 import AskQuestionCard from './ask-question-card';
 import CommitLog from './commit-log';
 import Link from 'next/link';
@@ -15,7 +16,7 @@ const DashboardPage = () => {
   const { project } = useProjects();
   return (
     <div>
-      {project?.id}
+      {/* {project?.id} */}
       <div className='flex items-center justify-between flex-wrap gap-y-4'>
         {/* github link */}
         <div className='flex items-center w-fit rounded-md bg-primary px-4 py-3'>
@@ -34,9 +35,9 @@ const DashboardPage = () => {
         <div className='h-4'></div>
 
         <div className="flex items-center gap-4">
-          TeamMembers
-          InviteButton 
-          ArchiveButton 
+
+          {/* TODO: ADD TEAM FEATURE */}
+          <ArchiveButton />
         </div>
       </div>
 

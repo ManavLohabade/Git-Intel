@@ -51,6 +51,7 @@ export const authConfig = {
     signIn: "/sign-in"
   },
   adapter: PrismaAdapter(db),
+  trustHost: true,
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
@@ -60,8 +61,8 @@ export const authConfig = {
       },
     }),
 
-    redirect: ({baseUrl}) => {
-      return baseUrl;
+    redirect: ({url, baseUrl}) => {
+      return `${baseUrl}/dashboard`
     }
   },
 } satisfies NextAuthConfig;

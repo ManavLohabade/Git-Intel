@@ -70,7 +70,7 @@ export const pollCommits = async(projectId: string )=> {
 
     const summaries = summaryResponses.map((response) => {
       if(response.status === 'fulfilled'){
-        return response.value
+        return response.value as string
       }
       return ""
     })

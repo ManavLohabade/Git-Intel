@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { type RouterOutputs, api } from '@/trpc/react'
+import { RouterOutputs, api } from '@/trpc/react'
 
 import { Button } from '@/components/ui/button'
 import React from 'react'

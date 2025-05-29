@@ -4,7 +4,7 @@
 
 import { generateEmbedding, summariseCode } from "./gemini"
 
-import { type Document } from "@langchain/core/documents"
+import { Document } from "@langchain/core/documents"
 //this is a class that allows you to look into the files of github repo
 import { GithubRepoLoader } from "@langchain/community/document_loaders/web/github"
 import { db } from "@/server/db"
@@ -12,7 +12,7 @@ import { db } from "@/server/db"
 export const loadGithubRepo = async(githubUrl: string, githubToken?: string) =>{
 
     const loader = new GithubRepoLoader(githubUrl, {
-        accessToken: githubToken || '',
+        accessToken: githubToken || process.env.GITHUB_TOKEN || '',
         branch: 'main', //or any branch of that repository
         ignoreFiles: ['package-lock.json','yarn.lock','pnpm-lock.yaml','bun.lock'], //this array contains the files that I can ignore
         recursive: true, //recursively traverse through all files and dirs
@@ -51,7 +51,7 @@ export const indexGithubRepo = async (projectId: string, githubUrl: string, gith
 
         const sourceCodeEmbedding = await db.sourceCodeEmbedding.create({
             data: {
-                summary: embedding.summary,
+                summary: embedding.summary || '',
                 sourceCode: embedding.sourceCode,
                 fileName: embedding.fileName,
                 projectId
@@ -72,7 +72,7 @@ const generateEmbeddings = async(docs: Document[]) => {
         console.log("Logging Summary: ",summary);
 
         console.log("DocPageContent: ", doc.pageContent);
-        const embedding = await generateEmbedding(summary);
+        const embedding = await generateEmbedding(summary || '');
 
         return {
             summary,

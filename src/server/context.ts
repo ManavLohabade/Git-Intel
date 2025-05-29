@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import type { Session } from "next-auth";
-import { type db } from "./db";
+import { db } from "./db";
 
 export interface TRPCContext {
   req: NextApiRequest;

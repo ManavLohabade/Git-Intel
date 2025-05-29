@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
+      <body suppressHydrationWarning>
         <SessionProvider>
           <TRPCReactProvider>{children}</TRPCReactProvider>
           <Toaster richColors/>
