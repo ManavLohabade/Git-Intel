@@ -1,16 +1,8 @@
-export const env = {
-  AUTH_SECRET: z.string().min(32),
-  AUTH_GITHUB_ID: z.string(),
-  AUTH_GITHUB_SECRET: z.string(),
-  DATABASE_URL: z.string().url(),
-  // Other vars...
-}
-
 -- CreateExtension
 CREATE EXTENSION IF NOT EXISTS "vector";
 
 -- CreateEnum
-CREATE TYPE "MeetingStatus" AS ENUM ('PROCESSING', 'COMPLETED');
+CREATE TYPE "MeetingStatus" AS ENUM ('PROCESSING', 'COMPLETED', 'FAILED');
 
 -- CreateTable
 CREATE TABLE "Account" (
