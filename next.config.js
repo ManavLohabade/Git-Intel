@@ -2,14 +2,18 @@
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
  * for Docker builds.
  */
-import "./src/env.js";
 
-/** @type {import("next").NextConfig} */
-const config = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    experimental: {
+        serverComponentsExternalPackages: ["@prisma/client"]
+    },
+    serverlessFunction: {
+        maxDuration: 60
+    },
     eslint: {
         ignoreDuringBuilds: true,
-      },
-
+    },
     images: {
         domains: [
             "avatars.githubusercontent.com",
@@ -18,4 +22,4 @@ const config = {
     }
 };
 
-export default config;
+export default nextConfig;
