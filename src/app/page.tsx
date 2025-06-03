@@ -107,17 +107,6 @@ export default function LandingPage() {
                 </Button>
               </Link>
             </div>
-            <div className="mt-8 shadow-2xl">
-              <div className="relative pt-[56.25%] w-full rounded-lg overflow-hidden shadow-lg">
-                <iframe 
-                  src="https://www.youtube.com/embed/eZHtBzoMgaE" 
-                  title="GitIntel Demo"
-                  className="absolute inset-0 w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                />
-              </div>
-            </div>
           </div>
           <div className="relative">
             <div className="absolute -z-10 inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-3xl blur-3xl"></div>
