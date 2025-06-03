@@ -2,7 +2,7 @@
 CREATE EXTENSION IF NOT EXISTS "vector";
 
 -- CreateEnum
-CREATE TYPE "MeetingStatus" AS ENUM ('PROCESSING', 'COMPLETED');
+CREATE TYPE "MeetingStatus" AS ENUM ('PROCESSING', 'COMPLETED', 'FAILED');
 
 -- CreateTable
 CREATE TABLE "Account" (

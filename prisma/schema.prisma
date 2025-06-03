@@ -150,4 +150,5 @@ model Commit {
 enum MeetingStatus {
   PROCESSING
   COMPLETED
+  FAILED
 }
