@@ -27,19 +27,6 @@ export const loadGithubRepo = async(githubUrl: string, githubToken?: string) =>{
 }
 
 
-// console.log(await loadGithubRepo('https://github.com/utkarsh125/shellmancer'))
-
-//TODO: Take reference from what it returned. The only thing I am concerned about is source and id
-// Document {
-//     pageContent: "import chalk ...",
-//     metadata: {
-//       source: "src/commands/generateScript.js",
-//       repository: "https://github.com/utkarsh125/shellmancer",
-//       branch: "main",
-//     },
-//     id: undefined,
-
-
 export const indexGithubRepo = async (projectId: string, githubUrl: string, githubToken?: string) => {
     const docs = await loadGithubRepo(githubUrl, githubToken)
 

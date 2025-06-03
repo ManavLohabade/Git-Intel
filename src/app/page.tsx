@@ -251,7 +251,7 @@ export default function LandingPage() {
       <footer className="bg-muted/30 border-t py-12">
         <div className="container mx-auto px-4 text-center">
           <Link
-            href="https://github.com/utkarsh125/git-intel"
+            href="https://github.com/ManavLohabade/git-intel"
             className="flex gap-2 items-center justify-center text-muted-foreground hover:text-foreground"
           >
             <Github /> Star this on Github

@@ -1,30 +1,26 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
   extensions = [vector]
 }
 
-// Necessary for NextAuth
 model Account {
   id                       String  @id @default(cuid())
   userId                   String
   type                     String
   provider                 String
   providerAccountId        String
-  refresh_token            String? // @db.Text
-  access_token             String? // @db.Text
+  refresh_token            String?
+  access_token             String?
   expires_at               Int?
   token_type               String?
   scope                    String?
-  id_token                 String? // @db.Text
+  id_token                 String?
   session_state            String?
   refresh_token_expires_in Int?
   user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -49,139 +45,109 @@ model VerificationToken {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // NextAuth fields
+  id            String          @id @default(cuid())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
   name          String?
-  email         String?   @unique
+  email         String?         @unique
   emailVerified DateTime?
   image         String?
-
   firstName     String?
   lastName      String?
   credits       Int             @default(150)
-  userToProject UserToProject[]
-
+  accounts      Account[]
   questionAsked Question[]
-
-  // Relations for NextAuth
-  accounts Account[]
-  sessions Session[]
-
-
+  sessions      Session[]
+  userToProject UserToProject[]
 }
 
 model Project {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  name      String
-  githubUrl String
-
-  deletedAt DateTime?
-
-  userToProjects      UserToProject[]
+  id                  String                @id @default(cuid())
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  name                String
+  githubUrl           String
+  deletedAt           DateTime?
   Commit              Commit[]
+  meeting             Meeting[]
+  savedQuestions      Question[]
   SourceCodeEmbedding SourceCodeEmbedding[]
-  
-  savedQuestions  Question[] 
-  meeting Meeting[]
+  userToProjects      UserToProject[]
 }
 
 model UserToProject {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   userId    String
   projectId String
-
-  user    User    @relation(fields: [userId], references: [id])
-  project Project @relation(fields: [projectId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model SourceCodeEmbedding {
-  id String @id @default(cuid())
-
-  summaryEmbedding Unsupported("vector(768)")? //particularly using 768 (gemini)
+  id               String                 @id @default(cuid())
+  summaryEmbedding Unsupported("vector")?
   sourceCode       String
   fileName         String
   summary          String
-
-  projectId String
-  project   Project @relation(fields: [projectId], references: [id])
+  projectId        String
+  project          Project                @relation(fields: [projectId], references: [id])
 }
 
-
-model Meeting{
-
-  id  String @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  name String
-
-  meetingUrl  String //firebase storage url
-
-  projectId String
-  project Project @relation(fields: [projectId], references: [id])
-  status MeetingStatus @default(PROCESSING)
-  issues Issue[]
+model Meeting {
+  id         String        @id @default(cuid())
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  name       String
+  meetingUrl String
+  projectId  String
+  status     MeetingStatus @default(PROCESSING)
+  issues     Issue[]
+  project    Project       @relation(fields: [projectId], references: [id])
 }
 
 model Issue {
-  id  String  @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  start String
-  end String 
-  gist  String
-  headline  String
-  summary String
-
-  meetingId String 
-  meeting Meeting @relation(fields: [meetingId], references: [id])
-}
-
-enum MeetingStatus {
-  PROCESSING
-  COMPLETED
-}
-
-model Question {
-  id  String @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  question String
-  answer String
-
-  filesReferences Json?
-
-  projectId String  
-  project Project @relation(fields: [projectId], references: [id])
-
-  userId  String
-  user  User  @relation(fields:[userId], references: [id])
-
-}
-model Commit {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  start     String
+  end       String
+  gist      String
+  headline  String
+  summary   String
+  meetingId String
+  meeting   Meeting  @relation(fields: [meetingId], references: [id])
+}
 
-  projectId String
-  project   Project @relation(fields: [projectId], references: [id])
+model Question {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  question        String
+  answer          String
+  filesReferences Json?
+  projectId       String
+  userId          String
+  project         Project  @relation(fields: [projectId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
+}
 
+model Commit {
+  id                 String   @id @default(cuid())
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  projectId          String
   commitMessage      String
   commitHash         String
   commitAuthorName   String
   commitAuthorAvatar String
   commitDate         DateTime
-  //ai summary
   summary            String
+  project            Project  @relation(fields: [projectId], references: [id])
+}
+
+enum MeetingStatus {
+  PROCESSING
+  COMPLETED
 }
